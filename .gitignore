@@ -1,0 +1,36 @@
+.venv/
+__pycache__/
+*.pyc
+
+# Python/OS
+.Python
+pip-wheel-metadata/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local databases and runtime artifacts
+*.sqlite
+*.sqlite3
+*.db
+*.db.sqlite
+
+# Runtime images (uploads + detections)
+Backend/core/media/*
+Backend/data/*
+!Backend/core/media/.gitkeep
+!Backend/data/.gitkeep
+
+# YOLOv5 repo/weights are optional (downloadable); keep repo clean
+Backend/yolov5/
+Backend/yolov5s.pt
+
+# Node (if you install frontend deps locally)
+Frontend/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE
+.vscode/
+.idea/

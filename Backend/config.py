@@ -5,9 +5,13 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY')
-    UPLOAD_FOLDER = os.path.join(basedir, 'core/media')
+    UPLOAD_FOLDER = os.path.join(basedir, 'core', 'media')
 
-conn = sqlite3.connect('garbage.db.sqlite')
+os.makedirs(Config.UPLOAD_FOLDER, exist_ok=True)
+
+
+db_path = os.path.join(basedir, 'garbage.db.sqlite')
+conn = sqlite3.connect(db_path)
 
 conn.execute('''CREATE TABLE IF NOT EXISTS yolo
          (image TEXT,

@@ -1,13 +1,17 @@
+import os
 import sqlite3
 from datetime import date, datetime
+
 from flask_cors import CORS
 from flask import Flask, request, jsonify, send_from_directory
 from werkzeug.utils import secure_filename
 from config import Config
-import os
 import pandas as pd
 
-conn = sqlite3.connect('car.db.sqlite')
+BASEDIR = os.path.abspath(os.path.dirname(__file__))
+DB_PATH = os.path.join(BASEDIR, 'car.db.sqlite')
+
+conn = sqlite3.connect(DB_PATH)
 
 
 
@@ -52,7 +56,7 @@ def data_add(addr, mac):
             file.save(os.path.join(Config.UPLOAD_FOLDER, date_time))
             date = datetime.now().strftime("%Y-%m-%d")
             time = datetime.now().strftime("%H:%M:%S")
-            conn = sqlite3.connect('car.db.sqlite')
+            conn = sqlite3.connect(DB_PATH)
             qry = f"""INSERT INTO yolo VALUES
                 ("{date_time}", "{date}", "{time}", "{addr}", "{mac}", 0)"""
             print(qry)
@@ -67,7 +71,7 @@ def data_add(addr, mac):
 
 @app.route('/delete_all', methods=['GET', 'POST', 'DELETE'])
 def deleteall_data():
-    conn = sqlite3.connect('car.db.sqlite')
+    conn = sqlite3.connect(DB_PATH)
     query = 'DELETE FROM yolo where is_verified = 2'
     conn.execute(query)
     conn.commit()
@@ -76,7 +80,7 @@ def deleteall_data():
 
 @app.route('/delete_row/<id>', methods=['GET', 'POST', 'DELETE'])
 def deleteall_row(id):
-    conn = sqlite3.connect('car.db.sqlite')
+    conn = sqlite3.connect(DB_PATH)
     query = f'DELETE FROM yolo WHERE image = "{id}"'
     conn.execute(query)
     conn.commit()
@@ -86,12 +90,12 @@ def deleteall_row(id):
 @app.route('/fetch/<area>', methods=['GET'])
 def get_data(area):
     if area == 'admin':
-        conn = sqlite3.connect('car.db.sqlite')
+        conn = sqlite3.connect(DB_PATH)
         query='select * from yolo where is_verified = 0'
         temp=conn.execute(query).fetchall()
         conn.commit()
     else:
-        conn = sqlite3.connect('car.db.sqlite')
+        conn = sqlite3.connect(DB_PATH)
         query=f"""select * from yolo where is_verified = 0 AND ADDRESS = '{area}'"""
         temp=conn.execute(query).fetchall()
         conn.commit()
@@ -131,12 +135,12 @@ def get_count():
 
 def get_count(area):
     if area == 'admin':
-        conn = sqlite3.connect('car.db.sqlite')
+        conn = sqlite3.connect(DB_PATH)
         query='select * from yolo where is_verified = 0'
         temp=conn.execute(query).fetchall()
         conn.commit()
     else:
-        conn = sqlite3.connect('car.db.sqlite')
+        conn = sqlite3.connect(DB_PATH)
         query=f"""select * from yolo where is_verified = 0 AND ADDRESS = '{area}'"""
         temp=conn.execute(query).fetchall()
         conn.commit()
@@ -179,7 +183,7 @@ def media(path):
     )
 @app.route('/verify/<id>/<area>', methods=['GET', 'POST'])
 def verify_update(id, area):
-    conn = sqlite3.connect('car.db.sqlite')
+    conn = sqlite3.connect(DB_PATH)
     query1 = f'select is_verified from yolo WHERE image = "{id}"'
     temp = conn.execute(query1).fetchall()
     temp = temp[0][0]
@@ -242,7 +246,7 @@ def get_delete(area):
 #    login 
 @app.route('/add_user/<name>/<email>/<passw>')
 def add_user(name,email,passw):
-    conn=sqlite3.connect('car.db.sqlite')
+    conn = sqlite3.connect(DB_PATH)
     qry = f"""INSERT INTO Users VALUES
                     ("{email}", "{name}", "{passw}")"""
     conn.execute(qry)
@@ -251,7 +255,7 @@ def add_user(name,email,passw):
 
 @app.route('/fetch_login')
 def fetch_login():
-    conn = sqlite3.connect('car.db.sqlite')
+    conn = sqlite3.connect(DB_PATH)
     query = 'select * from Users'
     temp = conn.execute(query).fetchall()
     conn.commit()
@@ -275,7 +279,7 @@ def fetch_login():
 
 @app.route('/valid/<name>/<passw>')
 def login_validate(name,passw):
-    conn = sqlite3.connect('car.db.sqlite')
+    conn = sqlite3.connect(DB_PATH)
     query=f"""SELECT * from Users where USERNAME ='{name}' AND PASSWORD='{passw}' """
     temp = conn.execute(query).fetchall()
     conn.commit()

@@ -82,18 +82,44 @@ cd Garbage-Detection
 pip install -r requirements.txt
 ```
 
-3️⃣ Run the FastAPI server:
+3️⃣ Run the Backend API server (Flask):
 
 ```sh
-uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+cd Backend
+python api.py
 ```
 
-4️⃣ Setup React Frontend:
+4️⃣ Run the Garbage Detection (webcam) client:
 
 ```sh
-cd frontend
+cd Backend
+python main.py
+```
+
+5️⃣ Setup React Frontend:
+
+```sh
+cd Frontend
 npm install
 npm start
+```
+
+## 📦 Zipping / Copying to another PC
+
+Before zipping, remove local-only/generated files:
+
+- Delete `.venv/` (the virtual environment is machine-specific)
+- Delete runtime artifacts:
+  - `Backend/core/media/*` (uploaded images)
+  - `Backend/data/*` (detector snapshots)
+  - any `*.sqlite`, `*.db` files if you want a clean start
+
+After unzipping on the new PC:
+
+```sh
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
 ```
 
 ## 🌟 Features
