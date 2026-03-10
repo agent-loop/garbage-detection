@@ -161,21 +161,11 @@ or simply paste the script into a one-off file and run it once.
 
 ### Backend
 
-- **`Backend/main.py`**: webcam/CCTV inference client
+- **`Backend/main.py`**: simple webcam garbage detector
   - Runs YOLO on **every frame**
   - Shows **live bounding boxes**
-  - Only **saves/sends** an annotated image once every **60 frames** and only when confidence is high
-  - Sends detection image to the API endpoint `POST /add/<addr>/<mac>`
-- **`Backend/api.py`**: Flask API server used by the detector + UI
-  - Saves uploaded images to `Backend/core/media/`
-  - Stores detection metadata in `Backend/car.db.sqlite`
-  - Exposes endpoints to fetch/verify/delete rows and login helpers
-- **`Backend/config.py`**: backend config
-  - Defines `UPLOAD_FOLDER` and ensures it exists
-  - Initializes `Backend/garbage.db.sqlite` table (legacy table used by some flows)
-- **`Backend/host/api.py` / `Backend/host/config.py`**: alternate API/config copy (same purpose as above)
-- **`Backend/model/best1000.pt`**: custom garbage detection weights (required for garbage-only performance)
-- **`Backend/core/media/`**: upload destination (created automatically, kept empty in git via `.gitkeep`)
+  - Saves an annotated image to `Backend/data/` every **60 frames** when garbage is detected
+- **`Backend/model/best1000.pt`**: custom garbage detection weights (required for best performance)
 - **`Backend/data/`**: detector snapshots (created automatically, kept empty in git via `.gitkeep`)
 
 ## 🛠️ Run (Windows PowerShell)
@@ -190,25 +180,16 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-### 2) Start the backend API
+### 2) Start live detection (webcam)
 
-In terminal 1:
-
-```powershell
-cd Backend
-python api.py
-```
-
-### 3) Start live detection (webcam)
-
-In terminal 2:
+From the repo root, with venv activated:
 
 ```powershell
 cd Backend
 python main.py
 ```
 
-`main.py` draws bounding boxes live. It **uploads** an annotated image every **60 frames** only if confidence is high.
+`main.py` draws bounding boxes live. It **saves** an annotated image every **60 frames** when garbage is detected into `Backend/data/`.
 
 ## 📦 Copy to another PC (zip)
 

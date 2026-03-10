@@ -1,15 +1,8 @@
-flask
-flask-cors
-werkzeug
 opencv-python
 pillow
 torch
 torchvision
-requests
-pandas
 ultralytics
 tqdm
 seaborn
 gitpython>=3.1.30
-tqdm
-seaborn
