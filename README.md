@@ -5,7 +5,6 @@ Detects garbage piles from a CCTV/webcam feed using a **custom-trained YOLOv5 mo
 ## 💥 What this repo contains
 
 - **Backend (Python)**: YOLO inference + Flask API + SQLite storage
-- **Android (Kotlin)**: mobile client (optional)
 
 This README is **text-only** (no images) so it stays lightweight and zip-friendly.
 
@@ -15,7 +14,6 @@ This README is **text-only** (no images) so it stays lightweight and zip-friendl
 - **Computer Vision**: OpenCV, Pillow
 - **API**: Flask + flask-cors
 - **Storage**: SQLite
-- **Android**: Kotlin (Jetpack libraries)
 
 ## 🧠 How the model was created (training summary)
 
@@ -179,10 +177,6 @@ or simply paste the script into a one-off file and run it once.
 - **`Backend/model/best1000.pt`**: custom garbage detection weights (required for garbage-only performance)
 - **`Backend/core/media/`**: upload destination (created automatically, kept empty in git via `.gitkeep`)
 - **`Backend/data/`**: detector snapshots (created automatically, kept empty in git via `.gitkeep`)
-
-### Android
-
-- **`App/`**: Android app source (Kotlin). Optional; not required to run the Python backend.
 
 ## 🛠️ Run (Windows PowerShell)
 
