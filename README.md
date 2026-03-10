@@ -5,7 +5,6 @@ Detects garbage piles from a CCTV/webcam feed using a **custom-trained YOLOv5 mo
 ## 💥 What this repo contains
 
 - **Backend (Python)**: YOLO inference + Flask API + SQLite storage
-- **Frontend (React)**: dashboard UI (login/history/verified/delete views)
 - **Android (Kotlin)**: mobile client (optional)
 
 This README is **text-only** (no images) so it stays lightweight and zip-friendly.
@@ -16,7 +15,6 @@ This README is **text-only** (no images) so it stays lightweight and zip-friendl
 - **Computer Vision**: OpenCV, Pillow
 - **API**: Flask + flask-cors
 - **Storage**: SQLite
-- **Frontend**: React
 - **Android**: Kotlin (Jetpack libraries)
 
 ## 🧠 How the model was created (training summary)
@@ -51,10 +49,6 @@ If you want to retrain or replace the model, put your new weights in `Backend/mo
 - **`Backend/model/best1000.pt`**: custom garbage detection weights (required for garbage-only performance)
 - **`Backend/core/media/`**: upload destination (created automatically, kept empty in git via `.gitkeep`)
 - **`Backend/data/`**: detector snapshots (created automatically, kept empty in git via `.gitkeep`)
-
-### Frontend (React)
-
-- **`Frontend/`**: React app that calls the backend API for data (login/history/verified/delete/dashboard components).
 
 ### Android
 
@@ -91,14 +85,6 @@ python main.py
 ```
 
 `main.py` draws bounding boxes live. It **uploads** an annotated image every **60 frames** only if confidence is high.
-
-### 4) (Optional) Start the React UI
-
-```powershell
-cd Frontend
-npm install
-npm start
-```
 
 ## 📦 Copy to another PC (zip)
 
